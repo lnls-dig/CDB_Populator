@@ -27,11 +27,21 @@ data.close
 login = ItemRestApi(user, password, server, port, protocol)
 catalog = login.getCatalogItems()
 
-
+#'y' will be catalog item property list and 'z' will be 'w' sulfix number.
+#Ex: cat0 is equal to a concatenation of y and z (y+z)
+w = 'item'
 x = 0
+y = 'cat'
+z = 0
+cat_list = []
+
+#This loop function maps the catalog dictionaries with the item data and convert into lists which will be saved in the memory
 for item in catalog:
-    y = 'item'
-    exec(y+str(x)+'=catalog[x]')
-    exec('del '+ y+str(x) +'[' + 'u' + "'domain'" +']')
-    exec('print('+ y+str(x) +'.values())')
+    exec(w+str(x)+'=catalog[x]')
+    exec('del '+w+str(x)+"[u'domain']")
+    exec("if u'item_identifier2' in "+ w+str(x)+ ": del "+ w+str(x) +"[u'item_identifier2']")
+    exec(y+str(z)+"="+ w+str(x) +'.values()')
+    exec(y+str(z)+".sort(reverse = True)")
+    exec("print("+y+str(z)+")")
     x += 1
+    z += 1
