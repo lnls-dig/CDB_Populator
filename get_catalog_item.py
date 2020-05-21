@@ -10,6 +10,7 @@ Receptor de dados do ComponentDB
 from cdb.cdb_web_service.api.itemRestApi import ItemRestApi
 from cdb.common.exceptions.invalidRequest import InvalidRequest
 import pandas as pd
+import getpass
 
 print("\n"+"**"*20+" CDB CATALOG ITEMS "+"**"*20+"\n\nINSERT CDB CREDENTIALS")
 
