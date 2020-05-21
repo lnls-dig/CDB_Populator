@@ -11,7 +11,6 @@ from cdb.cdb_web_service.api.itemRestApi import ItemRestApi
 from cdb.common.exceptions.invalidRequest import InvalidRequest
 import pandas as pd
 from io import StringIO
-import numpy as np
 
 #Reads a file with the credentials and save in the "line" variables
 data = open('account_cdb.txt', 'r')
@@ -33,7 +32,6 @@ w = 'item'
 x = 0
 y = 'cat'
 z = 0
-cat_list = []
 
 #This loop function maps the catalog dictionaries with the item data and convert into lists which will be saved in the memory
 for item in catalog:
@@ -45,3 +43,7 @@ for item in catalog:
     exec("print("+y+str(z)+")")
     x += 1
     z += 1
+
+#Prints a DataFrame of the acquired data in the request
+cat_table = pd.DataFrame(cat_list, columns = ['Item Name', 'Item Identifier', 'Item ID', 'Item Domain'])
+print(cat_table)
