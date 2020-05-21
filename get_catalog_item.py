@@ -2,7 +2,7 @@
 """
 Created on Mon, May 18 ‎09:30:22 2020
 
-Receptor de dados do ComponentDB
+ComponentDB Catalog Items Receiver 
 
 @author: Caio Santos - DIG
 """
