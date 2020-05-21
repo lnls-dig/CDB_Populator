@@ -1,26 +1,25 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon May  3 ‎09:30:22 2020
+Created on Mon, May 18 ‎09:30:22 2020
 
 Receptor de dados do ComponentDB
 
-@author: caiom
+@author: Caio Santos - DIG
 """
 
 from cdb.cdb_web_service.api.itemRestApi import ItemRestApi
 from cdb.common.exceptions.invalidRequest import InvalidRequest
 import pandas as pd
-from io import StringIO
 
-#Reads a file with the credentials and save in the "line" variables
-data = open('account_cdb.txt', 'r')
-line = data.readlines()
-user = line[0]
-password = line[1]
-server = line[2]
-port = 10232
-protocol = line[4]
-data.close
+print("\n"+"**"*20+" CDB CATALOG ITEMS "+"**"*20+"\n\nINSERT CDB CREDENTIALS")
+
+#Reads the credentials and save in the variables to connect to the server
+protocol = raw_input("\nNetwork protocol: ")
+server = raw_input("CDB server: ")
+port = int(input("Server port: "))
+user = raw_input("CDB user name: ")
+password = getpass.getpass(prompt = "Password: ")
+print("\nLoading data...\n")
 
 #Log into CDB database and get all catalog items with all properties
 login = ItemRestApi(user, password, server, port, protocol)
@@ -44,6 +43,9 @@ for item in catalog:
     x += 1
     z += 1
 
-#Prints a DataFrame of the acquired data in the request
+#Creates a DataFrame to receive the data
 cat_table = pd.DataFrame(cat_list, columns = ['Item Name', 'Item Identifier', 'Item ID', 'Item Domain'])
+
+#Prints a DataFrame of the acquired data in the request
+print("**"*20+" CATALOG ITEMS LIST "+"**"*20+"\n")
 print(cat_table)
