@@ -28,28 +28,40 @@ password = getpass.getpass(prompt = "Password: ")
 
 #Log into CDB database
 login = ItemRestApi(user, password, server, port, protocol)
-domain = login.getDomains()
-
-w = 'dom'
-x = 0
-y = 'item'
-z = 0
-dom_list = []
 
 #Formats the data received from CDB into easier interpretation dictionaries
-for item in domain :
-    exec(w+str(x)+'= domain[x]')
-    exec("if u'item_category_label' in "+ w+str(x)+ ": del "+ w+str(x) +"[u'item_category_label']")
-    exec("if u'item_identifier1_label' in "+ w+str(x)+ ": del "+ w+str(x) +"[u'item_identifier1_label']")
-    exec("if u'item_identifier2_label' in "+ w+str(x)+ ": del "+ w+str(x) +"[u'item_identifier2_label']")
-    exec("if u'item_type_label' in "+ w+str(x)+ ": del "+ w+str(x) +"[u'item_type_label']")
-    exec(y+str(z)+'=OrderedDict(sorted('+w+str(x)+'.items(), reverse=True))')
-    exec("dom_list.append("+y+str(z)+".values())") #Add ordered dictionaries values into a list
-    x += 1
-    z += 1
+def get_domain():
+    pd.set_option('max_colwidth', 80)
 
-#Creates a DataFrame with the lists values
-dom_table = pd.DataFrame(dom_list, columns = ['Domain ID', 'Domain Name', 'Domain Description'])
+    global domain
+    global w
+    global x
+    global y
+    global z
+    global dom_list
+    global dom_table
 
-print("**"*17+" DOMAIN NAMES LIST "+"**"*17+"\n")
-print(dom_table)
+    domain = login.getDomains()
+    w = 'dom'
+    x = 0
+    y = 'item'
+    z = 0
+    dom_list = []
+
+    for item in domain :
+        exec(w+str(x)+'= domain[x]')
+        exec("if u'item_category_label' in "+ w+str(x)+ ": del "+ w+str(x) +"[u'item_category_label']")
+        exec("if u'item_identifier1_label' in "+ w+str(x)+ ": del "+ w+str(x) +"[u'item_identifier1_label']")
+        exec("if u'item_identifier2_label' in "+ w+str(x)+ ": del "+ w+str(x) +"[u'item_identifier2_label']")
+        exec("if u'item_type_label' in "+ w+str(x)+ ": del "+ w+str(x) +"[u'item_type_label']")
+        exec(y+str(z)+'=OrderedDict(sorted('+w+str(x)+'.items(), reverse=True))')
+        exec("dom_list.append("+y+str(z)+".values())") #Add ordered dictionaries values into a list
+        x += 1
+        z += 1
+
+    #Creates a DataFrame with the lists values
+    dom_table = pd.DataFrame(dom_list, columns = ['Domain ID', 'Domain Name', 'Domain Description'])
+    print('\n'+"**"*17+" DOMAIN NAMES LIST "+"**"*17+"\n")
+    print(dom_table)
+
+get_domain()
