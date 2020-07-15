@@ -2,7 +2,7 @@
 """
 Created on Mon, May 18 ‎09:30:22 2020
 
-ComponentDB Catalog Items Receiver 
+ComponentDB Catalog Items Receiver
 
 @author: Caio Santos - DIG
 """
@@ -11,6 +11,7 @@ from cdb.cdb_web_service.api.itemRestApi import ItemRestApi
 from cdb.common.exceptions.invalidRequest import InvalidRequest
 import pandas as pd
 import getpass
+from collections import OrderedDict
 
 print("\n"+"**"*20+" CDB CATALOG ITEMS "+"**"*20+"\n\nINSERT CDB CREDENTIALS")
 
@@ -24,29 +25,37 @@ print("\nLoading data...\n")
 
 #Log into CDB database and get all catalog items with all properties
 login = ItemRestApi(user, password, server, port, protocol)
-catalog = login.getCatalogItems()
 
-#'y' will be catalog item property list and 'z' will be 'w' sulfix number.
-#Ex: cat0 is equal to a concatenation of y and z (y+z)
-w = 'item'
-x = 0
-y = 'cat'
-z = 0
+#Defines a function to get catalog from the server and store in a list of lists
+def get_catalog():
+    global catalog
+    global cat_list
+    global cat_table
+    global cat_id
 
-#This loop function maps the catalog dictionaries with the item data and convert into lists which will be saved in the memory
-for item in catalog:
-    exec(w+str(x)+'=catalog[x]')
-    exec('del '+w+str(x)+"[u'domain']")
-    exec("if u'item_identifier2' in "+ w+str(x)+ ": del "+ w+str(x) +"[u'item_identifier2']")
-    exec(y+str(z)+"="+ w+str(x) +'.values()')
-    exec(y+str(z)+".sort(reverse = True)")
-    exec("print("+y+str(z)+")")
-    x += 1
-    z += 1
+#Calls the function from CDB API
+    catalog = login.getCatalogItems()
+    w = 'item'
+    x = 0
+    y = 'cat'
+    z = 0
+    cat_list = []
 
-#Creates a DataFrame to receive the data
-cat_table = pd.DataFrame(cat_list, columns = ['Item Name', 'Item Identifier', 'Item ID', 'Item Domain'])
+#loop to map the catalog item data dictionaries and convert into lists which will be saved in the memory
+    for item in catalog:
+        exec(w+str(x)+'=catalog[x]')
+        exec("if u'domain' in "+w+str(x)+": del "+w+str(x)+"[u'domain']")
+        exec("if u'item_identifier2' in "+ w+str(x)+ ": del "+ w+str(x) +"[u'item_identifier2']")
+        exec(y+str(z)+'=OrderedDict(sorted('+w+str(x)+'.items(), reverse=True))')
+        exec("cat_list.append("+y+str(z)+".values())")
+        x += 1
+        z += 1
 
-#Prints a DataFrame of the acquired data in the request
-print("**"*20+" CATALOG ITEMS LIST "+"**"*20+"\n")
-print(cat_table)
+#Defines a function to receive the catalog and print it
+def print_catalog():
+    get_catalog()
+    cat_table = pd.DataFrame(cat_list, columns = ['Item Name', 'Item Identifier', 'Item ID', 'Item Domain'])
+    print("**"*20+" CATALOG ITEMS LIST "+"**"*20+"\n")
+    print(cat_table)
+
+print_catalog()
