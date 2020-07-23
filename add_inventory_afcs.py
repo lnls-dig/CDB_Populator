@@ -56,23 +56,77 @@ for data in ws.iter_rows(values_only=True):
     afc.append((ipn, sn, obs))
 
 #Validate inventory item existance
+
+#For AFCs
     if ":3.1:" in ipn:
         try:
-            login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn,derivedFromItemId = '6')
+            login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '6')
             print(ipn+' exists')
 
-        except cdb.common.exceptions.objectNotFound.ObjectNotFound:
-            print(ipn+" doesn't exists")
+# Validate item log existance
+            if isinstance(obs, float) == False:
+                print(ipn+' observations are: '+obs+'\n')
+                print('Updating observations to '+ipn)
 
+#Upload the log to the item
+                id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '6')[u'id']
+                login.addLogEntryToItemWithItemId(id, obs)
+                print('Update complete.\n')
+
+            else:
+                print(ipn+" doesn't have any observations\n")
+
+        except cdb.common.exceptions.objectNotFound.ObjectNotFound:
+            print(ipn+" doesn't exist. Adding to Database...")
+            login.addItem('Inventory', ipn,'Sample', itemIdentifier1 = sn, derivedFromItemId = '6')
+            id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '6')[u'id']
+            print(ipn+'Uploaded to Database. Item Id is: '+id)
+
+            if isinstance(obs, float) == False:
+                print(ipn+' observations are: '+obs)
+                print('Updating observations to '+ipn)
+
+                id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '6')[u'id']
+                login.addLogEntryToItemWithItemId(id, obs)
+                print('Update complete.\n')
+
+            else:
+                print(ipn+" doesn't have any observations\n")
+
+#For AFCs Timing
     if ":3.1T:" in ipn:
         try:
-            login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn,derivedFromItemId = '78')
+            login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '78')
             print(ipn+' exists')
 
+# Validate item log existance
+            if isinstance(obs, float) == False:
+                print(ipn+' observations are: '+obs+'\n')
+                print('Updating observations to '+ipn)
+
+#Upload the log to the item
+                id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '78')[u'id']
+                login.addLogEntryToItemWithItemId(id, obs)
+                print('Update complete.\n')
+
+            else:
+                print(ipn+" doesn't have any observations\n")
+
         except cdb.common.exceptions.objectNotFound.ObjectNotFound:
-            print(ipn+" doesn't exists")
+            print(ipn+" doesn't exist. Adding to Database...")
+            login.addItem('Inventory', ipn,'Sample', itemIdentifier1 = sn, derivedFromItemId = '78')
+            id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '78')[u'id']
+            print(ipn+'Uploaded to Database. Item Id is: '+id)
 
+            if isinstance(obs, float) == False:
+                print(ipn+' observations are: '+obs)
+                print('Updating observations to '+ipn)
 
-    login.addItem('Inventory', ipn,'Sample', itemIdentifier1 = sn, derivedFromItemId = '6')
-# Needs to add log entry if it exists in obs
-    print(ipn+' added to Database')
+                id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '78')[u'id']
+                login.addLogEntryToItemWithItemId(id, obs)
+                print('Update complete.\n')
+
+            else:
+                print(ipn+" doesn't have any observations\n")
+
+print('Item and item logs update complete.')
