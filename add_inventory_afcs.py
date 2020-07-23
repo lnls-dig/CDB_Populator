@@ -6,10 +6,11 @@ CDB Add Item
 
 @author: Caio Santos - DIG
 """
-
+import cdb
 from cdb.cdb_web_service.api.itemRestApi import ItemRestApi
 from cdb.common.exceptions.invalidRequest import InvalidRequest
 from cdb.common.exceptions.objectAlreadyExists import ObjectAlreadyExists
+from cdb.common.exceptions.objectNotFound import ObjectNotFound
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl import load_workbook
@@ -43,28 +44,35 @@ wb.save('afc_plan.xlsx')
 exemplo1 = load_workbook('afc_plan.xlsx', read_only=True)
 sheet = exemplo1['Sheet']
 
-x = 0
-y = 0
-z = 0
+afc = []
 
+#Reads the Excel and get the useful data
 for data in ws.iter_rows(values_only=True):
-    if 'AFC' in data and '3.1T' not in data:
-        exec("item"+str(x)+" = list(data)")
-        exec("del item"+str(x)+"[0]")
-        exec("name"+str(x)+" = item"+str(x)+"[0]+':3.1:'+item"+str(x)+"[1]")
-        exec("print(name"+str(x)+")")
+    if 'AFC' not in data:
+        continue
+    ipn = data[1]+':'+data[3]+':'+data[2]
+    sn = data[5]
+    obs = data[28]
+    afc.append((ipn, sn, obs))
 
+#Validate inventory item existance
+    if ":3.1:" in ipn:
         try:
-            exec("login.addItem('Inventory', name"+str(x)+",'Sample', itemIdentifier1 = item"+str(x)+"[4], description = 'Testing for final upload', derivedFromItemId = '6')")
-            exec("print(item"+str(x)+"[0]+' added to Database')")
-            z += 1
-        except:
-            exec("print(item"+str(x)+"[0]+' already exists in the Database')")
-            y += 1
-        x += 1
+            login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn,derivedFromItemId = '6')
+            print(ipn+' exists')
 
-if y != 0:
-    print('\n'+str(y)+' items were not uploaded to the Database.')
+        except cdb.common.exceptions.objectNotFound.ObjectNotFound:
+            print(ipn+" doesn't exists")
 
-elif y == 0:
-    print('\nAll items were uploaded successfully!')
+    if ":3.1T:" in ipn:
+        try:
+            login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn,derivedFromItemId = '78')
+            print(ipn+' exists')
+
+        except cdb.common.exceptions.objectNotFound.ObjectNotFound:
+            print(ipn+" doesn't exists")
+
+
+    login.addItem('Inventory', ipn,'Sample', itemIdentifier1 = sn, derivedFromItemId = '6')
+# Needs to add log entry if it exists in obs
+    print(ipn+' added to Database')
