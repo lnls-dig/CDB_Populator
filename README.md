@@ -7,6 +7,7 @@ This repository consists in a set of codes to do faster and easier data uploads 
 ##### Before install the API, check if you have Python2.7 and the setuptools library installed
 ```
 sudo apt-get install python
+sudo apt-get install pip
 sudo pip install setuptools
 ```
 
@@ -24,7 +25,7 @@ git clone https://github.com/AdvancedPhotonSource/ComponentDB.git
 The Python API is in the CDB files. It will be installed with the following command:
 ```
 cd ComponentDB/src/python/
-sudo python install setup.py
+sudo python setup.py install
 ```
 
 ##### 3- Check if the API is working
