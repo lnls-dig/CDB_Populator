@@ -6,6 +6,7 @@ CDB Add Item
 
 @author: Caio Santos - DIG
 """
+
 import cdb
 from cdb.cdb_web_service.api.itemRestApi import ItemRestApi
 from cdb.common.exceptions.invalidRequest import InvalidRequest
@@ -15,6 +16,7 @@ from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl import load_workbook
 import pandas as pd
+import unidecode
 import getpass
 
 print("\n"+"**"*20+" CDB ADD ITEMS "+"**"*20+"\n\nINSERT CDB CREDENTIALS")
@@ -70,7 +72,8 @@ for data in ws.iter_rows(values_only=True):
 
 #Upload the log to the item
                 id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '6')[u'id']
-                login.addLogEntryToItemWithItemId(id, obs)
+                obs = 'ATMOS: '+obs
+                login.addLogEntryToItemWithItemId(id, unidecode.unidecode(obs))
                 print('Update complete.\n')
 
             else:
@@ -80,14 +83,15 @@ for data in ws.iter_rows(values_only=True):
             print(ipn+" doesn't exist. Adding to Database...")
             login.addItem('Inventory', ipn,'Sample', itemIdentifier1 = sn, derivedFromItemId = '6')
             id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '6')[u'id']
-            print(ipn+'Uploaded to Database. Item Id is: '+id)
+            print(ipn+' Uploaded to Database. Item Id is: '+id)
 
             if isinstance(obs, float) == False:
                 print(ipn+' observations are: '+obs)
                 print('Updating observations to '+ipn)
 
                 id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '6')[u'id']
-                login.addLogEntryToItemWithItemId(id, obs)
+                obs = 'ATMOS: '+obs
+                login.addLogEntryToItemWithItemId(id, unidecode.unidecode(obs))
                 print('Update complete.\n')
 
             else:
@@ -106,7 +110,8 @@ for data in ws.iter_rows(values_only=True):
 
 #Upload the log to the item
                 id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '78')[u'id']
-                login.addLogEntryToItemWithItemId(id, obs)
+                obs = 'ATMOS: '+obs
+                login.addLogEntryToItemWithItemId(id, unidecode.unidecode(obs))
                 print('Update complete.\n')
 
             else:
@@ -116,14 +121,15 @@ for data in ws.iter_rows(values_only=True):
             print(ipn+" doesn't exist. Adding to Database...")
             login.addItem('Inventory', ipn,'Sample', itemIdentifier1 = sn, derivedFromItemId = '78')
             id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '78')[u'id']
-            print(ipn+'Uploaded to Database. Item Id is: '+id)
+            print(ipn+' Uploaded to Database. Item Id is: '+id)
 
             if isinstance(obs, float) == False:
                 print(ipn+' observations are: '+obs)
                 print('Updating observations to '+ipn)
 
                 id = login.getItemByUniqueAttributes('Inventory', ipn, itemIdentifier1 = sn, derivedFromItemId = '78')[u'id']
-                login.addLogEntryToItemWithItemId(id, obs)
+                obs = 'ATMOS: '+obs
+                login.addLogEntryToItemWithItemId(id, unidecode.unidecode(obs))
                 print('Update complete.\n')
 
             else:
