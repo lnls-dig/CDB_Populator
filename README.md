@@ -31,7 +31,7 @@ sudo python setup.py install
 ##### 3- Check if the API is working
 To chek the API operation, use the following command:
 ```
-cd ~/.local/bin
+cd ComponentDB/bin/
 ./cdb-get-item --service-url=https://your.host.name:port/cdb --id=item id
 ```
 
