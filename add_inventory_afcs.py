@@ -10,7 +10,6 @@ CDB Add Item
 import cdb
 from cdb.cdb_web_service.api.itemRestApi import ItemRestApi
 from cdb.common.exceptions.invalidRequest import InvalidRequest
-from cdb.common.exceptions.objectAlreadyExists import ObjectAlreadyExists
 from cdb.common.exceptions.objectNotFound import ObjectNotFound
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
