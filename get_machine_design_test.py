@@ -7,11 +7,11 @@ ComponentDB Machine Design Names Receiver
 @author: Caio Santos - DIG
 """
 
+import cdb
 from cdb.cdb_web_service.api.itemRestApi import ItemRestApi
 from cdb.common.exceptions.invalidRequest import InvalidRequest
-import pandas as pd
+import openpyxl
 import getpass
-from collections import OrderedDict
 
 #Set the maximum columns width
 pd.set_option('max_colwidth', 80)
