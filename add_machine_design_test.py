@@ -115,5 +115,5 @@ for x in range(0, 22):
 #Add Crates as Contained Items for Racks as Parent Items
 for x in range(0, 22):
     print('Adding '+MC['Crate'][x]+' as parent of '+MC['Rack'][x]+'...')
-    addItemElement('component', MC['Rack'][x], MC['Crate'][x])
+    login.addItemElement('component', MC['Rack'][x], MC['Crate'][x])
     print('Hierarchy added successfully!\n')
