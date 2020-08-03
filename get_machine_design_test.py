@@ -14,7 +14,6 @@ import openpyxl
 import getpass
 
 #Set the maximum columns width
-pd.set_option('max_colwidth', 80)
 print("\n\n"+"**"*17+" CDB MACHINE DESIGN NAMES "+"**"*17+"\n\nINSERT CDB CREDENTIALS")
 
 #Reads the credentials and save in the variables to connect to the server
