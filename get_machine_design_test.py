@@ -67,5 +67,5 @@ for i in range(2, 1450):
         MC['Parts'].append(cell)
 
 for i in range(0, 22):
-item = login.getItemByUniqueAttributes('Machine Design', MC['Rack'][i])
+    item = login.getItemByUniqueAttributes('Machine Design', MC['Rack'][i])
     print(item[u'name', u'itemIdentifier_1'])
