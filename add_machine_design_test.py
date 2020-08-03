@@ -71,21 +71,21 @@ for x in range(0, 22):
         r_name = 'BPM Rack 20-TL'
         description = 'Rack for Beam Position Monitoring system in transport line'
         print('Adding %s to Database...' % (r_name))
-        login.addItem('Machine Desing', r_name, 'Sample', MC['Rack'][x], description = description)
+        login.addItem('Machine Design', r_name, 'Sample', MC['Rack'][x], description = description)
         print('%s added successfully!\n' % (r_name))
 
     elif 'Spare' in MC['Rack'][x]:
         r_name = 'BPM Homolog Rack'
         description = 'Homolog Rack for Beam Position Monitoring system'
         print('Adding Rack %s to Database...' % (r_name))
-        login.addItem('Machine Desing', r_name, 'Sample', MC['Rack'][x], description = description)
+        login.addItem('Machine Design', r_name, 'Sample', MC['Rack'][x], description = description)
         print('%s added successfully!\n' % (r_name))
 
     else:
         r_name = 'BPM Rack '+str(MC['Rack'][x][3:5])
         description = 'Rack for Beam Position Monitoring system'
         print('Adding Rack %s to Database...' % (r_name))
-        login.addItem('Machine Desing', r_name, 'Sample', MC['Rack'][x], description = description)
+        login.addItem('Machine Design', r_name, 'Sample', MC['Rack'][x], description = description)
         print('%s added successfully!\n' % (r_name))
 
 #Add Crate uTCA Placeholders in CDB with name, label and description
@@ -95,21 +95,21 @@ for x in range(0, 22):
         c_name = 'Rack 20-TL MicroTCA Crate'
         description = 'Crate MicroTCA for Rack 20-TL'
         print('Adding %s to Database...' % (c_name))
-        login.addItem('Machine Desing', c_name, 'Sample', MC['Rack'][x], description = description)
+        login.addItem('Machine Design', c_name, 'Sample', MC['Rack'][x], description = description)
         print('%s added successfully!\n' % (c_name))
 
     elif 'BPM:' in MC['Crate'][x]:
         c_name = 'Rack '+str(MC['Crate'][x][3:5])+' MicroTCA Crate'
         description = 'Crate MicroTCA for Rack '+str(MC['Crate'][x][3:5])
         print('Adding %s to Database...' % (c_name))
-        login.addItem('Machine Desing', c_name, 'Sample', MC['Rack'][x], description = description)
+        login.addItem('Machine Design', c_name, 'Sample', MC['Rack'][x], description = description)
         print('%s added successfully!\n' % (c_name))
 
     elif 'BPM:' not in MC['Crate'][x] or 'TL' not in MC['Crate'][x]:
         c_name = 'Homolog Rack MicroTCA Crate'
         description = 'Crate MicroTCA for Homolog Rack'
         print('Adding %s to Database...' % (c_name))
-        login.addItem('Machine Desing', c_name, 'Sample', MC['Rack'][x], description = description)
+        login.addItem('Machine Design', c_name, 'Sample', MC['Rack'][x], description = description)
         print('%s added successfully!\n' % (c_name))
 
 #Add Crates as Contained Items for Racks as Parent Items
