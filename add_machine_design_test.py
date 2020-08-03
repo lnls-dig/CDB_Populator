@@ -15,11 +15,11 @@ import getpass
 
 print('Logging into CDB...')
 #Reads the credentials and save in the variables to connect to the server
-protocol = 'https'#raw_input("\nNetwork protocol: ")
-server = '104.248.61.75'#raw_input("CDB server: ")
-port = 10232#int(input("Server port: "))
-user = 'caio'#raw_input("CDB user name: ")
-password = 'WvgrDZv3^%*@TofpSh8q'#getpass.getpass(prompt = "Password: ")
+protocol = raw_input("\nNetwork protocol: ")
+server = raw_input("CDB server: ")
+port = int(input("Server port: "))
+user = raw_input("CDB user name: ")
+password = getpass.getpass(prompt = "Password: ")
 
 #Log into CDB database
 login = ItemRestApi(user, password, server, port, protocol)
