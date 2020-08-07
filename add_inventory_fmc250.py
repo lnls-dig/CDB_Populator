@@ -32,20 +32,15 @@ wb = openpyxl.load_workbook('config_ebpm_total.xlsx')
 fmc = wb['FMC_250M']
 
 items = []
-c1 = 1
-c2 = 2
-c3 = 3
-c5 = 5
-c26 = 26
 x = 0
 
 for r in range(3, 265):
-    item = fmc.cell(r, c1).value
-    ipn = fmc.cell(r, c2).value
-    ver = fmc.cell(r, c3).value
-    sn = fmc.cell(r, c5).value
+    item = fmc.cell(r, 1).value
+    ipn = fmc.cell(r, 2).value
+    ver = fmc.cell(r, 3).value
+    sn = fmc.cell(r, 5).value
     name = str(item)+':'+str(ver)+':'+str(ipn)
-    obs = fmc.cell(r, c26).value
+    obs = fmc.cell(r, 26).value
 
     items.append([name, ipn, sn, obs])
 
