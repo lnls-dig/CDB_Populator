@@ -35,9 +35,9 @@ afc = []
 
 #Reads the Excel and get the useful data
 for r in range(3, 180):
-    ipn = item.cell(r, 1)+':'+item.cell(r, 3)+':'+item.cell(r, 2)
-    sn = item.cell(r, 5)
-    obs = item.cell(r, 28)
+    ipn = item.cell(r, 1).value+':'+item.cell(r, 3).value+':'+item.cell(r, 2).value
+    sn = item.cell(r, 5).value
+    obs = item.cell(r, 28).value
     afc.append((ipn, sn, obs))
 
 #Validate inventory item existance
