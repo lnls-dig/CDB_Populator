@@ -35,7 +35,7 @@ cd ComponentDB/bin/
 ./cdb-get-item --service-url=https://your.host.name:port/cdb --id=item id
 ```
 
-This command will find the item with the given id in the CDB database and print his values. In the code bellow the terminal shows one item with the id=50. It have to be like this:
+This command will find the item with the given id in the CDB database and print his values. In the code bellow the terminal shows one item with the id=50. It has to be like this:
 ```
 id=50 name=MOE item_identifier1=1.0 item_identifier2=Optoelectric Module
 ```
