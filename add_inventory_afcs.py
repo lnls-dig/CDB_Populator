@@ -11,14 +11,11 @@ import cdb
 from cdb.cdb_web_service.api.itemRestApi import ItemRestApi
 from cdb.common.exceptions.invalidRequest import InvalidRequest
 from cdb.common.exceptions.objectNotFound import ObjectNotFound
-from openpyxl import Workbook
-from openpyxl.utils.dataframe import dataframe_to_rows
-from openpyxl import load_workbook
-import pandas as pd
+import openpyxl
 import unidecode
 import getpass
 
-print("\n"+"**"*20+" CDB ADD ITEMS "+"**"*20+"\n\nINSERT CDB CREDENTIALS")
+print('Please insert the credentials:')
 #Reads the credentials and save in the variables to connect to the server
 protocol = raw_input("\nNetwork protocol: ")
 server = raw_input("CDB server: ")
@@ -28,32 +25,19 @@ password = getpass.getpass(prompt = "Password: ")
 
 #Log into CDB database
 login = ItemRestApi(user, password, server, port, protocol)
+print('Login successfully.\n\nReading worksheet...\n')
 
 #Opens a Excel sheet to receive the inventory items data and save as a workbook
-pd.set_option('max_colwidth', 80)
-plan = pd.ExcelFile(r'/mnt/c/Users/caiom/Documents/CDB Document Files/Codes/controle_config_sirius_ebpm_total.xlsx')
-ex = pd.read_excel(plan, dtype = { 'SN' : str })
-
-wb = Workbook()
-ws = wb.active
-
-for r in dataframe_to_rows(ex, index=True, header=True):
-    ws.append(r)
-
-wb.save('afc_plan.xlsx')
-
-exemplo1 = load_workbook('afc_plan.xlsx', read_only=True)
-sheet = exemplo1['Sheet']
+wb = openpyxl.load_workbook('config_ebpm_total.xlsx')
+item = wb['AFC']
 
 afc = []
 
 #Reads the Excel and get the useful data
-for data in ws.iter_rows(values_only=True):
-    if 'AFC' not in data:
-        continue
-    ipn = data[1]+':'+data[3]+':'+data[2]
-    sn = data[5]
-    obs = data[28]
+for r in range(3, 180):
+    ipn = item.cell(r, 1)+':'+item.cell(r, 3)+':'+item.cell(r, 2)
+    sn = item.cell(r, 5)
+    obs = item.cell(r, 28)
     afc.append((ipn, sn, obs))
 
 #Validate inventory item existance
